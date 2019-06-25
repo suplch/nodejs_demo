@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/axios.min.js"></script>
+    <script>
+        function getUserName() {
+            // axios 是一个 ajax 库
+            axios.get('./get_username').then(function (result) {
+                console.log(result.data);
+                document.getElementById('user_name').innerText = result.data.name;
+            })
+        }
+        function getStudents() {
+            axios.get('./get_students').then(function (result) {
+                var students = result.data;
+
+                var ul = document.getElementById('student_list');
+
+                for (let student of students) {
+                    var li = document.createElement('li');
+                    li.innerHTML = student.name;
+                    ul.appendChild(li);
+                }
+
+            })
+        }
+    </script>
+</head>
+<body>
+    <button onclick="getUserName()">获取 用户名, 通过 ajax 请求</button>
+    <span id="user_name"></span>
+    <hr/>
+    <button onclick="getStudents()">获取 班级 学生列表</button>
+    <ul id="student_list">
+
+    </ul>
+</body>
+</html>
