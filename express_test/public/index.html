@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/axios.min.js"></script>
+    <script>
+        function getFriends() {
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (http.readyState === 4) {
+                    if (http.status === 200) {
+                        var friends = JSON.parse(http.responseText);
+                        var ul = document.getElementById('my_friend');
+                        ul.innerHTML = '';
+                        for (var i = 0; i < friends.length; i++) {
+                            var li = document.createElement('li');
+                            li.innerText = friends[i].name;
+                            ul.appendChild(li)
+                        }
+                    }
+                }
+            };
+            http.open('GET', '/get_friends');
+            http.send();
+        }
+        
+        function getFriends_php() {
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (http.readyState === 4) {
+                    if (http.status === 200) {
+
+                        alert(http.responseText)
+
+                    }
+                }
+            };
+            // http.open('GET', '/php/get_friends.php');
+            http.open('GET', '/get_friends_2')
+            http.send();
+        }
+        
+        
+        function registerUser() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var identify = document.getElementById('identify').value;
+
+            axios.post('/register_user', {
+                username: username,
+                password: password,
+                identify: identify
+            }).then(function (result) {
+                console.log(result.data);
+                if (result.data.status === 10000) {
+                    alert('ok')
+                } else {
+                    alert(result.data.msg);
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+ <button onclick="getFriends()">获取我的朋友列表</button>
+    <ul id="my_friend">
+
+    </ul>
+
+<button onclick="getFriends_php()">获取用户 php</button>
+    <hr/>
+
+    <div style="border: solid 1px red;">
+        用户名: <input id="username" type="text"/><br/>
+        密码: <input id="password" type="password"/><br/>
+        身份证号: <input id="identify" type="text"/><br/>
+        <button onclick="registerUser()">提交</button>
+    </div>
+</body>
+</html>

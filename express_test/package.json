@@ -1,0 +1,17 @@
+{
+  "name": "my_taobao",
+  "version": "1.0.0",
+  "description": "本网站是一个电子商务网",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "买东西"
+  ],
+  "author": "1904",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.17.1"
+  }
+}
