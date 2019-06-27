@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="axios.min.js"></script>
+    <script>
+        function login() {
+
+            var login_name = document.getElementById('login_name').value
+            var password = document.getElementById('password').value
+            
+            axios.post('/login', {
+                login_name: login_name,
+                password: password
+            }).then(function (result) {
+                console.log(result.data);
+
+                if (result.data.status === 10000) {
+                    location.href = './products.html'
+                } else {
+
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div>
+    登录名: <input id="login_name" type="text">
+    密码: <input id="password" type="password">
+
+    <button onclick="login()">登录</button>
+
+</div>
+</body>
+</html>

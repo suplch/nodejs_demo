@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="axios.min.js"></script>
+    <script>
+        function register() {
+            var login_name = document.getElementById('login_name').value
+            var password = document.getElementById('password').value
+            var confirm_password = document.getElementById('confirm_password').value;
+
+            if (password.trim() === '') {
+                alert('请输入密码')
+                return;
+            }
+
+            if (password !== confirm_password) {
+                alert('密码不一致');
+                return;
+            }
+
+            axios.post('/register', {
+                login_name: login_name,
+                password: password
+            }).then(function (result) {
+                console.log(result.data);
+                if (result.data.status === 10000) {
+                    location.href = './login.html';
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <div>
+        登录名: <input id="login_name" type="text">
+        密码: <input id="password" type="password">
+        确认密码: <input id="confirm_password" type="password">
+        <button onclick="register()">注册</button>
+
+    </div>
+</body>
+</html>
