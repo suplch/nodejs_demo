@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="axios.min.js"></script>
+    <script>
+        function getProducts() {
+
+            axios.get('/products/get_products').then(function (result) {
+                var productsData = result.data;
+                if (productsData.status === 10000) {
+
+                    console.log(productsData.data.products)
+
+                    paintProducts(productsData.data.products)
+                } else if (productsData.status === 11110) {
+                    location.href = './login.html'
+                }
+            })
+        }
+        function del_product(product_id) {
+            axios.post('/products/del_product', {
+                product_id: product_id
+            }).then(function (result) {
+                if (result.data.status === 10000) {
+                    //location.reload(true);
+                }
+            })
+        }
+
+        function paintProducts(products) {
+            var product_body = document.getElementById('product_body');
+
+            for (let product of products) {
+                var tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.count}</td>
+                    <td>${product.unit}</td>
+                    <td>
+                        <button onclick="del_product('${product._id}')">删除</button>
+                        <button>修改</button>
+                    </td>
+
+                `;
+                product_body.appendChild(tr);
+
+            }
+        }
+
+        window.onload = function () {
+            getProducts();
+        };
+
+        function addProduct() {
+            var name = document.getElementById('name').value;
+            var price = document.getElementById('price').value;
+            var count = document.getElementById('count').value;
+            var unit = document.getElementById('unit').value;
+
+            axios.post('/products/add_product', {
+                name: name,
+                price: price,
+                count: count,
+                unit: unit
+            }).then(function (result) {
+                if (result.data.status === 10000) {
+                    alert('ok')
+                    location.reload(true);
+                }
+            })
+
+        }
+
+    </script>
+</head>
+<body>
+
+    <table id="product_table" border="1">
+        <thead>
+            <tr>
+                <th>产品名称</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="product_body">
+        </tbody>
+    </table>
+    <hr/>
+
+    <div>
+        <input id="name" type="text">
+        <input id="price" type="number">
+        <input id="count" type="number">
+        <input id="unit" type="text">
+        <button onclick="addProduct()">新增</button>
+    </div>
+</body>
+</html>

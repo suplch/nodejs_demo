@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="axios.min.js"></script>
+    <script>
+        function sumbitData() {
+            axios.post('/add_user', {
+                name: 'zhang',
+                gender: '男'
+            }).then(function (result) {
+                console.log(result);
+            })
+        }
+    </script>
+</head>
+<body>
+
+<button onclick="sumbitData()">提交</button>
+</body>
+</html>

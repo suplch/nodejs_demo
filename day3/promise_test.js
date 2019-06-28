@@ -1,21 +1,26 @@
 
 var promise = new Promise(function (resolve, reject) {
+    resolve('返回一个值')
 
-    setTimeout(function () {
-         resolve('返回一个值')
-
-        // reject('这是一个错误')
-
-    }, 3000)
-    
 });
 
-async function main() {
-    const result = await promise;
-    console.log(result)
-}
+var promise2 = new Promise(function (resolve, reject) {
+    resolve('返回第二个值')
+});
 
-main();
+var p1 = promise.then(function (result) {
+    console.log(result);
+    return promise2;
+});
+
+p1.then(function (result) {
+
+    console.log(result)
+});
+
+
+
+
 
 
 // promise.then(function (result) {
